@@ -388,6 +388,10 @@ public class RealmRecyclerView extends FrameLayout {
         swipeRefreshLayout.setRefreshing(refreshing);
     }
     
+    public void setRefreshColorSchemeResources(@ColorRes int... colorResIds) {
+        swipeRefreshLayout.setColorSchemeResources(colorResIds);
+    }
+    
     public void resetHasLoadMoreFired() {
         hasLoadMoreFired = false;
     }
