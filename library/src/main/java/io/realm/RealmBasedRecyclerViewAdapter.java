@@ -204,7 +204,7 @@ public abstract class RealmBasedRecyclerViewAdapter
 
     public abstract VH onCreateRealmViewHolder(ViewGroup viewGroup, int viewType);
 
-    public abstract void onBindRealmViewHolder(VH holder, int position);
+    public abstract void onBindRealmViewHolder(VH holder, int position, int realmIndex);
 
     public VH onCreateFooterViewHolder(ViewGroup viewGroup) {
         throw new IllegalStateException("Implementation missing");
@@ -271,7 +271,7 @@ public abstract class RealmBasedRecyclerViewAdapter
                     layoutParams.isHeader = true;
                     onBindHeaderViewHolder(holder,position);
                 } else {
-                    onBindRealmViewHolder((VH) holder, rowWrappers.get(position).realmIndex);
+                    onBindRealmViewHolder((VH) holder, position, rowWrappers.get(position).realmIndex);
                 }
                 layoutParams.setSlm(LinearSLM.ID);
                 if (header != null) {
@@ -281,7 +281,7 @@ public abstract class RealmBasedRecyclerViewAdapter
                 }
                 holder.itemView.setLayoutParams(layoutParams);
             } else {
-                onBindRealmViewHolder((VH) holder, position);
+                onBindRealmViewHolder((VH) holder, position, position);
             }
         }
     }
