@@ -3,6 +3,7 @@ package co.moonmonkeylabs.realmrecyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
+import android.support.annotation.LayoutRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -401,6 +402,23 @@ public class RealmRecyclerView extends FrameLayout {
     public void setBufferItems(int bufferItems){
         if (bufferItems <= 0) bufferItems = 0;
         this.bufferItems = bufferItems;
+    }
+
+    public ViewStub getEmptyViewContainer() {
+    	return emptyContentContainer;
+    }
+
+    public void setEmptyViewContainer(ViewStub emptyContentContainer) {
+    	this.emptyContentContainer = emptyContentContainer;
+    }
+
+    public void setEmptyViewContainer(@LayoutRes int emptyViewId) {
+    	this.emptyViewId = emptyViewId;
+
+    	if (emptyViewId != 0) {
+            emptyContentContainer.setLayoutResource(emptyViewId);
+            emptyContentContainer.inflate();
+        }
     }
 
     private SwipeRefreshLayout.OnRefreshListener recyclerViewRefreshListener =
