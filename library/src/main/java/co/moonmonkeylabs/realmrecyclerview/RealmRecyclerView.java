@@ -42,6 +42,7 @@ public class RealmRecyclerView extends FrameLayout {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private ViewStub emptyContentContainer;
+    private View emptyContentView;
     private RealmBasedRecyclerViewAdapter adapter;
     private RealmSimpleItemTouchHelperCallback realmSimpleItemTouchHelperCallback;
     private boolean hasLoadMoreFired;
@@ -113,7 +114,7 @@ public class RealmRecyclerView extends FrameLayout {
 
         if (emptyViewId != 0) {
             emptyContentContainer.setLayoutResource(emptyViewId);
-            emptyContentContainer.inflate();
+            emptyContentView = emptyContentContainer.inflate();
         }
 
         if (type == null) {
@@ -404,20 +405,16 @@ public class RealmRecyclerView extends FrameLayout {
         this.bufferItems = bufferItems;
     }
 
-    public ViewStub getEmptyViewContainer() {
-    	return emptyContentContainer;
+    public View getEmptyView() {
+    	return emptyContentView;
     }
 
-    public void setEmptyViewContainer(ViewStub emptyContentContainer) {
-    	this.emptyContentContainer = emptyContentContainer;
-    }
-
-    public void setEmptyViewContainer(@LayoutRes int emptyViewId) {
+    public void setEmptyView(@LayoutRes int emptyViewId) {
     	this.emptyViewId = emptyViewId;
 
     	if (emptyViewId != 0) {
             emptyContentContainer.setLayoutResource(emptyViewId);
-            emptyContentContainer.inflate();
+            emptyContentView = emptyContentContainer.inflate();
         }
     }
 
