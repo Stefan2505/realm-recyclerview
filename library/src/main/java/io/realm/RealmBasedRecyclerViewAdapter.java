@@ -364,23 +364,12 @@ public abstract class RealmBasedRecyclerViewAdapter
         String result = null;
         if (columnValue instanceof Boolean) {
             result = columnValue.toString();
-<<<<<<< HEAD
-        }
-
-        if (columnValue instanceof String) {
-            result = ((String) columnValue).substring(0, 1);
-        }
-
-        if (columnValue instanceof Long) {
-            result = columnValue.toString();
-=======
         } else if (columnValue instanceof String) {
             result = ((String) columnValue).substring(0, 1);
         } else if (columnValue instanceof Long) {
             result = columnValue.toString();
         } else {
             throw new IllegalStateException("columnType not supported");
->>>>>>> deps/realm-and-other-deps-update
         }
 
         return result;
@@ -455,30 +444,13 @@ public abstract class RealmBasedRecyclerViewAdapter
             final long headerIndex = realmResults.getTableOrView().getTable().getColumnIndex(headerColumnName);
             int i = 0;
             for (RealmModel result : realmResults) {
-<<<<<<< HEAD
-                Object rawHeader = null;
-=======
                 Object rawHeader;
->>>>>>> deps/realm-and-other-deps-update
                 RealmFieldType fieldType = ((RealmObjectProxy) result)
                         .realmGet$proxyState().getRow$realm().getColumnType(headerIndex);
 
                 if (fieldType == RealmFieldType.STRING) {
                     rawHeader = ((RealmObjectProxy) result)
                             .realmGet$proxyState().getRow$realm().getString(headerIndex);
-
-<<<<<<< HEAD
-                }
-
-                if (fieldType == RealmFieldType.BOOLEAN) {
-                    rawHeader = ((RealmObjectProxy) result)
-                            .realmGet$proxyState().getRow$realm().getBoolean(headerIndex);
-                }
-
-                if (fieldType == RealmFieldType.INTEGER) {
-                    rawHeader = ((RealmObjectProxy) result)
-                            .realmGet$proxyState().getRow$realm().getLong(headerIndex);
-=======
                 } else if (fieldType == RealmFieldType.BOOLEAN) {
                     rawHeader = ((RealmObjectProxy) result)
                             .realmGet$proxyState().getRow$realm().getBoolean(headerIndex);
@@ -487,7 +459,6 @@ public abstract class RealmBasedRecyclerViewAdapter
                             .realmGet$proxyState().getRow$realm().getLong(headerIndex);
                 } else {
                     throw new IllegalStateException("columnValue type not supported");
->>>>>>> deps/realm-and-other-deps-update
                 }
 
                 String header = createHeaderFromColumnValue(rawHeader);
