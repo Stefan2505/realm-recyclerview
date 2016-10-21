@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
@@ -72,8 +73,7 @@ public class MainActivity extends RealmBaseActivity {
         if (isLoadMore) {
             realm.beginTransaction();
             for (int i = 0; i < 60; i++) {
-                QuoteModel quoteModel = realm.createObject(QuoteModel.class);
-                quoteModel.setId(i + 1);
+                QuoteModel quoteModel = realm.createObject(QuoteModel.class, i + 1);
                 quoteModel.setQuote(quotes.get((int) (quoteModel.getId() % quotes.size())));
             }
             realm.commitTransaction();
@@ -87,7 +87,7 @@ public class MainActivity extends RealmBaseActivity {
                 quoteModels,
                 true,
                 true,
-                isBulk ? "quote" : null);
+                isBulk ? "date" : null);
         realmRecyclerView.setAdapter(quoteAdapter);
 
         realmRecyclerView.setOnRefreshListener(
@@ -236,8 +236,7 @@ public class MainActivity extends RealmBaseActivity {
             protected Void doInBackground(Void... params) {
                 Realm instance = Realm.getInstance(getRealmConfig());
                 instance.beginTransaction();
-                QuoteModel quoteModel = instance.createObject(QuoteModel.class);
-                quoteModel.setId(System.currentTimeMillis());
+                QuoteModel quoteModel = instance.createObject(QuoteModel.class, System.currentTimeMillis());
                 quoteModel.setQuote(quotes.get((int) (quoteModel.getId() % quotes.size())));
                 instance.commitTransaction();
                 instance.close();
@@ -260,20 +259,16 @@ public class MainActivity extends RealmBaseActivity {
 
                 instance.beginTransaction();
 
-                QuoteModel quoteModel = instance.createObject(QuoteModel.class);
-                quoteModel.setId(1);
+                QuoteModel quoteModel = instance.createObject(QuoteModel.class, 1);
                 quoteModel.setQuote(quotes.get((int) (quoteModel.getId() % quotes.size())));
 
-                QuoteModel quoteModel2 = instance.createObject(QuoteModel.class);
-                quoteModel2.setId(3);
+                QuoteModel quoteModel2 = instance.createObject(QuoteModel.class, 3);
                 quoteModel2.setQuote(quotes.get((int) (quoteModel2.getId() % quotes.size())));
 
-                QuoteModel quoteModel3 = instance.createObject(QuoteModel.class);
-                quoteModel3.setId(5);
+                QuoteModel quoteModel3 = instance.createObject(QuoteModel.class, 5);
                 quoteModel3.setQuote(quotes.get((int) (quoteModel3.getId() % quotes.size())));
 
-                QuoteModel quoteModel4 = instance.createObject(QuoteModel.class);
-                quoteModel4.setId(7);
+                QuoteModel quoteModel4 = instance.createObject(QuoteModel.class, 7);
                 quoteModel4.setQuote(quotes.get((int) (quoteModel4.getId() % quotes.size())));
 
                 instance.commitTransaction();
@@ -296,12 +291,10 @@ public class MainActivity extends RealmBaseActivity {
                 }
                 instance.beginTransaction();
 
-                QuoteModel quoteModel = instance.createObject(QuoteModel.class);
-                quoteModel.setId(2);
+                QuoteModel quoteModel = instance.createObject(QuoteModel.class, 2);
                 quoteModel.setQuote(quotes.get((int) (quoteModel.getId() % quotes.size())));
 
-                QuoteModel quoteModel2 = instance.createObject(QuoteModel.class);
-                quoteModel2.setId(4);
+                QuoteModel quoteModel2 = instance.createObject(QuoteModel.class, 4);
                 quoteModel2.setQuote(quotes.get((int) (quoteModel2.getId() % quotes.size())));
 
                 instance.commitTransaction();
@@ -341,6 +334,7 @@ public class MainActivity extends RealmBaseActivity {
                 if (quoteModel != null) {
                     instance.beginTransaction();
                     quoteModel.setQuote("Updated: " + quoteModel.getQuote());
+                    quoteModel.setDate(new Date(System.currentTimeMillis()));
                     instance.commitTransaction();
                 }
                 instance.close();
@@ -388,8 +382,7 @@ public class MainActivity extends RealmBaseActivity {
                 Realm instance = Realm.getInstance(getRealmConfig());
                 instance.beginTransaction();
                 for (int i = 0; i < 60; i++) {
-                    QuoteModel quoteModel = instance.createObject(QuoteModel.class);
-                    quoteModel.setId(i + 100); // That is to offset for primary key
+                    QuoteModel quoteModel = instance.createObject(QuoteModel.class, i + 100); // That is to offset for primary key
                     quoteModel.setQuote(quotes.get((int) (quoteModel.getId() % quotes.size())));
                 }
                 instance.commitTransaction();

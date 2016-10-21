@@ -11,15 +11,17 @@ A powerful ```Recyclerview``` wrapper for working with ```Realm``` as your datas
 ##How To Include It:
 
 ```
-	repositories {
-        // ...
-        maven { url "https://jitpack.io" }
+    allprojects {
+        repositories {
+            // ...
+            maven { url "https://jitpack.io" }
+        }
     }
 ```
 
 ```
 	dependencies {
-	        compile 'com.github.thorbenprimke:realm-recyclerview:0.9.20'
+	        compile 'com.github.thorbenprimke:realm-recyclerview:0.9.23'
 	}
 ```
 

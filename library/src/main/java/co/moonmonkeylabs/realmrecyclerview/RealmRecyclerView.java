@@ -417,7 +417,7 @@ public class RealmRecyclerView extends FrameLayout {
             emptyContentView = emptyContentContainer.inflate();
         }
     }
-
+    
     private SwipeRefreshLayout.OnRefreshListener recyclerViewRefreshListener =
             new SwipeRefreshLayout.OnRefreshListener() {
                 @Override

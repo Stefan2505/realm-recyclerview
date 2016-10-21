@@ -164,12 +164,12 @@ public abstract class RealmBasedRecyclerViewAdapter
         // If automatic updates aren't enabled, then animateResults should be false as well.
         this.animateResults = (automaticUpdate && animateResults);
         if (animateResults) {
-            animatePrimaryColumnIndex = realmResults.getTable().getTable().getPrimaryKey();
+            animatePrimaryColumnIndex = realmResults.getTableOrView().getTable().getPrimaryKey();
             if (animatePrimaryColumnIndex == TableOrView.NO_MATCH) {
                 throw new IllegalStateException(
                         "Animating the results requires a primaryKey.");
             }
-            animatePrimaryIdType = realmResults.getTable().getColumnType(animatePrimaryColumnIndex);
+            animatePrimaryIdType = realmResults.getTableOrView().getColumnType(animatePrimaryColumnIndex);
             if (animatePrimaryIdType != RealmFieldType.INTEGER &&
                     animatePrimaryIdType != RealmFieldType.STRING) {
                 throw new IllegalStateException(
@@ -177,15 +177,16 @@ public abstract class RealmBasedRecyclerViewAdapter
             }
 
             if (animateExtraColumnName != null) {
-                animateExtraColumnIndex = realmResults.getTable().getTable()
+                animateExtraColumnIndex = realmResults.getTableOrView().getTable()
                         .getColumnIndex(animateExtraColumnName);
                 if (animateExtraColumnIndex == TableOrView.NO_MATCH) {
                     throw new IllegalStateException(
                             "Animating the results requires a valid animateColumnName.");
                 }
-                animateExtraIdType = realmResults.getTable().getColumnType(animateExtraColumnIndex);
+                animateExtraIdType = realmResults.getTableOrView().getColumnType(animateExtraColumnIndex);
                 if (animateExtraIdType != RealmFieldType.INTEGER &&
-                        animateExtraIdType != RealmFieldType.STRING) {
+                        animateExtraIdType != RealmFieldType.STRING &&
+                        animateExtraIdType != RealmFieldType.DATE) {
                     throw new IllegalStateException(
                             "Animating requires a animateColumnName of type Int/Long or String");
                 }
@@ -363,6 +364,7 @@ public abstract class RealmBasedRecyclerViewAdapter
         String result = null;
         if (columnValue instanceof Boolean) {
             result = columnValue.toString();
+<<<<<<< HEAD
         }
 
         if (columnValue instanceof String) {
@@ -371,6 +373,14 @@ public abstract class RealmBasedRecyclerViewAdapter
 
         if (columnValue instanceof Long) {
             result = columnValue.toString();
+=======
+        } else if (columnValue instanceof String) {
+            result = ((String) columnValue).substring(0, 1);
+        } else if (columnValue instanceof Long) {
+            result = columnValue.toString();
+        } else {
+            throw new IllegalStateException("columnType not supported");
+>>>>>>> deps/realm-and-other-deps-update
         }
 
         return result;
@@ -422,6 +432,8 @@ public abstract class RealmBasedRecyclerViewAdapter
                 return rowPrimaryIdStr + String.valueOf(row.getLong(animateExtraColumnIndex));
             } else if (animateExtraIdType == RealmFieldType.STRING) {
                 return rowPrimaryIdStr + row.getString(animateExtraColumnIndex);
+            } else if (animateExtraIdType == RealmFieldType.DATE) {
+                return rowPrimaryIdStr + row.getDate(animateExtraColumnIndex).getTime();
             } else {
                 throw new IllegalStateException("Unknown animateExtraIdType");
             }
@@ -440,10 +452,14 @@ public abstract class RealmBasedRecyclerViewAdapter
             int sectionFirstPosition = 0;
             rowWrappers.clear();
 
-            final long headerIndex = realmResults.getTable().getColumnIndex(headerColumnName);
+            final long headerIndex = realmResults.getTableOrView().getTable().getColumnIndex(headerColumnName);
             int i = 0;
             for (RealmModel result : realmResults) {
+<<<<<<< HEAD
                 Object rawHeader = null;
+=======
+                Object rawHeader;
+>>>>>>> deps/realm-and-other-deps-update
                 RealmFieldType fieldType = ((RealmObjectProxy) result)
                         .realmGet$proxyState().getRow$realm().getColumnType(headerIndex);
 
@@ -451,6 +467,7 @@ public abstract class RealmBasedRecyclerViewAdapter
                     rawHeader = ((RealmObjectProxy) result)
                             .realmGet$proxyState().getRow$realm().getString(headerIndex);
 
+<<<<<<< HEAD
                 }
 
                 if (fieldType == RealmFieldType.BOOLEAN) {
@@ -461,6 +478,16 @@ public abstract class RealmBasedRecyclerViewAdapter
                 if (fieldType == RealmFieldType.INTEGER) {
                     rawHeader = ((RealmObjectProxy) result)
                             .realmGet$proxyState().getRow$realm().getLong(headerIndex);
+=======
+                } else if (fieldType == RealmFieldType.BOOLEAN) {
+                    rawHeader = ((RealmObjectProxy) result)
+                            .realmGet$proxyState().getRow$realm().getBoolean(headerIndex);
+                } else if (fieldType == RealmFieldType.INTEGER) {
+                    rawHeader = ((RealmObjectProxy) result)
+                            .realmGet$proxyState().getRow$realm().getLong(headerIndex);
+                } else {
+                    throw new IllegalStateException("columnValue type not supported");
+>>>>>>> deps/realm-and-other-deps-update
                 }
 
                 String header = createHeaderFromColumnValue(rawHeader);
